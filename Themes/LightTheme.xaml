@@ -1,0 +1,18 @@
+<!-- Themes/LightTheme.xaml -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Paleta Principal -->
+    <SolidColorBrush x:Key="ColorPrincipal" Color="#D90429"/>
+    <!-- Rojo -->
+    <SolidColorBrush x:Key="ColorFondo" Color="#FFF5F5F5"/>
+    <!-- Blanco suave -->
+    <SolidColorBrush x:Key="ColorTexto" Color="#FF1E1E1E"/>
+    <!-- Casi negro -->
+    <SolidColorBrush x:Key="ColorSecundario" Color="#FFA9A9A9"/>
+    <!-- Gris metalico -->
+
+    <!-- Extras -->
+    <SolidColorBrush x:Key="ColorBoton" Color="#D90429"/>
+    <SolidColorBrush x:Key="ColorBotonTexto" Color="White"/>
+</ResourceDictionary>

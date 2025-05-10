@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="f1management.View.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource ColorFondo}">
+    
+    <Grid>
+            <UniformGrid Margin="30" Columns="2" HorizontalAlignment="Center" VerticalAlignment="Center" Rows="3">
+                <Button Content="CARRERAS" Style="{StaticResource MenuButtonStyle}" Click="Carreras_Click"/>
+                <Button Content="PIEZAS" Style="{StaticResource MenuButtonStyle}" Click="Piezas_Click"/>
+                <Button Content="RENDIMIENTO" Style="{StaticResource MenuButtonStyle}" Click="Rendimiento_Click"/>
+                <Button Content="MIEMBROS" Style="{StaticResource MenuButtonStyle}" Click="Miembros_Click"/>
+                <Button Content="PILOTOS" Style="{StaticResource MenuButtonStyle}" Click="Pilotos_Click"/>
+            </UniformGrid>
+    </Grid>
+
+</UserControl>

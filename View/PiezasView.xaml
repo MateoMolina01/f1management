@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="f1management.View.PiezasView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource ColorFondo}" Width="864">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Botón de volver -->
+            <RowDefinition Height="*"/>
+            <!-- Contenido principal -->
+        </Grid.RowDefinitions>
+
+        <!-- Botón para volver al Dashboard -->
+        <Button Content="← Volver"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Margin="0,0,0,10"
+        Padding="6,2"
+        FontSize="12"
+        Background="Transparent"
+        Foreground="{StaticResource ColorPrincipal}"
+        BorderBrush="Transparent"
+        Cursor="Hand"
+        Click="Volver_Click"/>
+
+        <!-- Contenido principal -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Lista de piezas -->
+            <ListBox x:Name="ListaPiezas"
+                     Grid.Column="0"
+                     Margin="0,0,10,0"
+                     Background="White"
+                     BorderThickness="1"
+                     BorderBrush="Gray"
+                     DisplayMemberPath="Descripcion"/>
+
+            <!-- Detalles de la pieza seleccionada -->
+            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Background="White" Margin="10,0,0,0">
+                <StackPanel Margin="15">
+                    <TextBlock Text="Detalles de la Pieza"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Margin="0,0,0,20"/>
+
+                    <TextBlock Text="Descripción:" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="DescripcionText" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Fecha Montaje:" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="FechaMontajeText" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Precio:" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="PrecioText" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Proveedor:" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="ProveedorText" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Montada:" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="MontadaText" Margin="0,0,0,20"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Mejorar" Style="{StaticResource MenuButtonStyle}" Margin="0,0,10,0"/>
+                        <Button Content="Cambiar" Style="{StaticResource MenuButtonStyle}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

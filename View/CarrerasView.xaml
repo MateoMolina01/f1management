@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="f1management.View.CarrerasView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource ColorFondo}" Width="882" Height="351">
+
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <!-- Lista de carreras -->
+            <ColumnDefinition Width="*"/>
+            <!-- Detalles de pilotos -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Lista de Carreras -->
+        <Border Background="White" CornerRadius="8" Margin="0,0,20,0" Padding="10">
+            <ListBox x:Name="CarrerasListBox"
+                     DisplayMemberPath="NombreCarrera"
+                     SelectedItem="{Binding CarreraSeleccionada, Mode=TwoWay}"
+                     BorderThickness="0"
+                     Background="Transparent"
+                     Foreground="Black"
+                     FontSize="14"/>
+        </Border>
+
+        <!-- Panel de los dos pilotos -->
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Piloto 1 -->
+            <Border Background="White" CornerRadius="10" Margin="10" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="{Binding Piloto1.Nombre}" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Piloto1.Dorsal}" FontSize="28" FontWeight="Bold" Foreground="Gray" Margin="0,5,0,15"/>
+                    <TextBlock Text="Puntos:" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding Piloto1.Puntos}" FontSize="16"/>
+                    <TextBlock Text="Posición:" FontWeight="SemiBold" Margin="0,10,0,0"/>
+                    <TextBlock Text="{Binding Piloto1.Posicion}" FontSize="16"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Piloto 2 -->
+            <Border Grid.Column="1" Background="White" CornerRadius="10" Margin="10" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="{Binding Piloto2.Nombre}" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Piloto2.Dorsal}" FontSize="28" FontWeight="Bold" Foreground="Gray" Margin="0,5,0,15"/>
+                    <TextBlock Text="Puntos:" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding Piloto2.Puntos}" FontSize="16"/>
+                    <TextBlock Text="Posición:" FontWeight="SemiBold" Margin="0,10,0,0"/>
+                    <TextBlock Text="{Binding Piloto2.Posicion}" FontSize="16"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
