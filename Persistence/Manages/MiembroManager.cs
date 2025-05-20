@@ -61,21 +61,21 @@ namespace f1management.Persistence.Manages
         public void updateMiembro(Miembro miembro)
         {
             DBBroker broker = DBBroker.obtenerAgente();
-            string query = $"UPDATE miembros SET nombre = '{miembro.Nombre}', idUsuario = {miembro.IdUsuario}, idMonoplaza = {miembro.IdMonoplaza}, idRol = {miembro.IdRol} WHERE idMiembro = {miembro.Id}";
+            string query = $"UPDATE miembros SET nombre = '{miembro.Nombre}', idUsuario = {miembro.IdUsuario}, idMonoplaza = {miembro.IdMonoplaza}, idRol = {miembro.IdRol} WHERE idMiembros = {miembro.Id}";
             broker.modifier(query);
         }
 
         public void deleteMiembro(Miembro miembro)
         {
             DBBroker broker = DBBroker.obtenerAgente();
-            string query = $"DELETE FROM miembros WHERE idMiembro = {miembro.Id}";
+            string query = $"DELETE FROM miembros WHERE idMiembros = {miembro.Id}";
             broker.modifier(query);
         }
 
         public Miembro getMiembroById(int id)
         {
             Miembro miembro = null;
-            List<object> auxList = DBBroker.obtenerAgente().leer($"SELECT * FROM miembros WHERE idMiembro = {id}");
+            List<object> auxList = DBBroker.obtenerAgente().leer($"SELECT * FROM miembros WHERE idMiembros = {id}");
             foreach (List<object> row in auxList)
             {
                 miembro = new Miembro();

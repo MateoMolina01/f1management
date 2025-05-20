@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="f1management.View.EstadisticasView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             Background="{DynamicResource BrushFondo}">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Botón de volver -->
+        <Button Content="← Volver"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Padding="6,2"
+                FontSize="12"
+                Background="Transparent"
+                Foreground="{DynamicResource BrushPrincipal}"
+                BorderBrush="Transparent"
+                Cursor="Hand"
+                Click="Volver_Click"/>
+
+        <!-- Título -->
+        <TextBlock Grid.Row="1"
+                   Text="📊 Estadísticas de la Temporada"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   Foreground="{DynamicResource BrushPrincipal}"
+                   Margin="0,0,0,20"/>
+
+        <!-- Contenido gráfico -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Gráfico de puntos -->
+            <lvc:CartesianChart Grid.Column="0" Series="{Binding SeriesPuntos}"
+                                LegendLocation="Right" Margin="10">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Pilotos" Labels="{Binding LabelsPilotos}" />
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Puntos" LabelFormatter="{Binding Formatter}" />
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+
+            <!-- Gráfico de carreras disputadas -->
+            <lvc:CartesianChart Grid.Column="1" Series="{Binding SeriesCarreras}"
+                                LegendLocation="Right" Margin="10">
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Pilotos" Labels="{Binding LabelsPilotos}" />
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Carreras disputadas" />
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+        </Grid>
+    </Grid>
+</UserControl>

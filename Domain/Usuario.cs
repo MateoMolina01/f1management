@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace f1management.Persistence
 {
-    class Usuario
+    public class Usuario
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
@@ -63,6 +63,26 @@ namespace f1management.Persistence
         public void update()
         {
             um.updateUsuario(this);
+        }
+
+        public bool existeMail(string email)
+        {
+            return um.ExisteEmail(email);
+        }
+
+        public bool existeNombre(string nombre)
+        {
+            return um.ExisteNombreUsuario(nombre);
+        }
+
+        public string encriptar(string password)
+        {
+            return um.EncriptarContraseña(password);
+        }
+
+        public override string ToString()
+        {
+            return Nombre;
         }
     }
 }

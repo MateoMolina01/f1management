@@ -1,101 +1,151 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
+using f1management.Persistence;
+using f1management.Persistence.Manages;
+using proyectoExamen.persistence.manages;
 
 namespace f1management.View
 {
     public partial class MiembrosView : UserControl
     {
-        // Clase simple para representar un miembro
-        public class Miembro
-        {
-            public string Nombre { get; set; }
-            public string Rol { get; set; }
-            public string MonoplazaAsignado { get; set; }
-        }
-
         private List<Miembro> miembros = new List<Miembro>();
         private Miembro miembroSeleccionado = null;
+        private MiembroManager mm = new MiembroManager();
+
+        private List<Usuario> usuarios = new List<Usuario>();
+        private UsuarioManager um = new UsuarioManager();
+
+        private List<Rol> roles = new List<Rol>();
+        private RolManager rm = new RolManager();
 
         public MiembrosView()
         {
             InitializeComponent();
-            // Cargar los miembros desde la BBDD cuando lo implementes
+            CargarUsuarios();
+            CargarRoles();
             CargarMiembros();
         }
 
-        private void CargarMiembros()
+        public void CargarMiembros()
         {
-            // Aquí más adelante pondrás la lógica para cargar desde la base de datos.
+            miembros.Clear();
+            miembros = mm.readMiembros();
             ListaMiembros.ItemsSource = null;
             ListaMiembros.ItemsSource = miembros;
         }
 
-        private void ListaMiembros_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void CargarUsuarios()
+        {
+            usuarios = um.readUsuarios();
+            CmbUsuario.ItemsSource = usuarios;
+            CmbRol.DisplayMemberPath = "Nombre";
+            CmbRol.SelectedValuePath = "Id";
+        }
+
+        public void CargarRoles()
+        {
+            roles = rm.readRoles();
+            CmbRol.ItemsSource = roles;
+            CmbRol.DisplayMemberPath = "Nombre";
+            CmbRol.SelectedValuePath = "Id";
+        }
+
+        public void ListaMiembros_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             miembroSeleccionado = (Miembro)ListaMiembros.SelectedItem;
 
             if (miembroSeleccionado != null)
             {
                 TxtNombre.Text = miembroSeleccionado.Nombre;
-                CmbRol.Text = miembroSeleccionado.Rol;
-                TxtMonoplaza.Text = miembroSeleccionado.MonoplazaAsignado;
+                TxtMonoplaza.Text = miembroSeleccionado.IdMonoplaza.ToString();
+                CmbRol.SelectedValue = miembroSeleccionado.IdRol;
+                CmbUsuario.SelectedValue = miembroSeleccionado.IdUsuario;
             }
         }
 
-        private void Guardar_Click(object sender, RoutedEventArgs e)
+        public void Guardar_Click(object sender, RoutedEventArgs e)
         {
             if (miembroSeleccionado != null)
             {
                 miembroSeleccionado.Nombre = TxtNombre.Text;
-                miembroSeleccionado.Rol = CmbRol.Text;
-                miembroSeleccionado.MonoplazaAsignado = TxtMonoplaza.Text;
-                CargarMiembros();
+
+                if (int.TryParse(TxtMonoplaza.Text, out int idMonoplaza))
+                {
+                    miembroSeleccionado.IdMonoplaza = idMonoplaza;
+                }
+
+                if (CmbRol.SelectedValue != null && int.TryParse(CmbRol.SelectedValue.ToString(), out int idRol))
+                {
+                    miembroSeleccionado.IdRol = idRol;
+                }
+
+                if (CmbUsuario.SelectedItem is Usuario usuarioSeleccionado)
+                {
+                    miembroSeleccionado.IdUsuario = usuarioSeleccionado.Id;
+                }
+
+                miembroSeleccionado.update();
+                //CargarMiembros();
+                LimpiarFormulario();
             }
         }
 
-        private void Eliminar_Click(object sender, RoutedEventArgs e)
+        public void Eliminar_Click(object sender, RoutedEventArgs e)
         {
             if (miembroSeleccionado != null)
             {
-                miembros.Remove(miembroSeleccionado);
+                miembroSeleccionado.delete();
                 miembroSeleccionado = null;
                 LimpiarFormulario();
                 CargarMiembros();
             }
         }
 
-        private void Añadir_Click(object sender, RoutedEventArgs e)
+        public void Añadir_Click(object sender, RoutedEventArgs e)
         {
-            var nuevo = new Miembro
+            if (string.IsNullOrWhiteSpace(TxtNombre.Text) ||
+                CmbRol.SelectedValue == null ||
+                string.IsNullOrWhiteSpace(TxtMonoplaza.Text) ||
+                CmbUsuario.SelectedItem == null)
+            {
+                MessageBox.Show("Por favor, rellena todos los campos antes de añadir.");
+                return;
+            }
+
+            if (!int.TryParse(TxtMonoplaza.Text, out int idMonoplaza))
+            {
+                MessageBox.Show("El ID del monoplaza debe ser un número.");
+                return;
+            }
+
+            int idRol = Convert.ToInt32(CmbRol.SelectedValue);
+            int idUsuario = ((Usuario)CmbUsuario.SelectedItem).Id;
+
+            Miembro nuevo = new Miembro
             {
                 Nombre = TxtNombre.Text,
-                Rol = CmbRol.Text,
-                MonoplazaAsignado = TxtMonoplaza.Text
+                IdMonoplaza = idMonoplaza,
+                IdRol = idRol,
+                IdUsuario = idUsuario
             };
 
-            miembros.Add(nuevo);
+            nuevo.insert();
+
             LimpiarFormulario();
             CargarMiembros();
         }
 
-        private void LimpiarFormulario()
+        public void LimpiarFormulario()
         {
             TxtNombre.Text = "";
-            CmbRol.SelectedIndex = -1;
             TxtMonoplaza.Text = "";
+            CmbRol.SelectedIndex = -1;
+            CmbUsuario.SelectedIndex = -1;
         }
 
-        private void Volver_Click(object sender, RoutedEventArgs e)
+        public void Volver_Click(object sender, RoutedEventArgs e)
         {
             ((MainWindow)Application.Current.MainWindow).MainContent.Content = new DashboardView();
         }

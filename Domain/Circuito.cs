@@ -61,6 +61,11 @@ namespace f1management.Persistence.Manages
         {
             return cm.getPaisNombre(idPais);
         }
+
+        public override string ToString()
+        {
+            return Nombre;
+        }
     }
 
 }

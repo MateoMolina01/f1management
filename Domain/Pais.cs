@@ -55,5 +55,10 @@ namespace f1management.Persistence
         {
             pm.deletePais(this);
         }
+
+        public override string ToString()
+        {
+            return Nombre;
+        }
     }
 }

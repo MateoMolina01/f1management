@@ -85,6 +85,9 @@ namespace f1management.Persistence
             return pm.readPilotos();
         }
 
-
+        public override string ToString()
+        {
+            return Nombre;
+        }
     }
 }

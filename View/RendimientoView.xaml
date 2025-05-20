@@ -1,12 +1,119 @@
 ﻿<UserControl x:Class="f1management.View.RendimientoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:f1management.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             Background="{DynamicResource BrushFondo}">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="PosicionTemplate">
+            <Border Width="32" Height="32"
+                    Background="{DynamicResource BrushPrincipal}"
+                    CornerRadius="16"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="4">
+                <TextBlock Text="{Binding Posición}"
+                           Foreground="White"
+                           FontWeight="Bold"
+                           FontSize="14"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Botón Volver -->
+        <Button Content="← Volver"
+                Style="{StaticResource AccentButtonStyle}"
+                Margin="10"
+                Click="Volver_Click"/>
+
+        <!-- ComboBox de selección -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,10,0,10">
+            <TextBlock Text="Clasificación:" 
+                       FontSize="18" 
+                       FontWeight="Bold" 
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource BrushTexto}"/>
+            <ComboBox x:Name="TipoClasificacionComboBox"
+                      SelectionChanged="TipoClasificacionComboBox_SelectionChanged"
+                      Width="160"
+                      Margin="10,0,0,0">
+                <ComboBoxItem Content="Pilotos" IsSelected="True"/>
+                <ComboBoxItem Content="Equipos"/>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- DataGrid -->
+        <Border Grid.Row="2" Grid.Column="0" Margin="20"
+                CornerRadius="10"
+                Background="{DynamicResource BrushClaro}"
+                Effect="{StaticResource DropShadow}">
+            <DataGrid x:Name="dataGridDrivers"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      SelectionChanged="dataGridDrivers_SelectionChanged"
+                      Background="White"
+                      Foreground="{DynamicResource BrushTexto}"
+                      RowBackground="White"
+                      AlternatingRowBackground="#F4F4F4"
+                      BorderThickness="0"
+                      FontSize="14"
+                      GridLinesVisibility="None"
+                      Margin="0"
+                      />
+        </Border>
+
+        <!-- Panel lateral detalle -->
+        <Border x:Name="PanelDetalle"
+                Grid.Row="0" Grid.RowSpan="3"
+                Grid.Column="1"
+                Width="300"
+                Background="{DynamicResource BrushClaro}"
+                Padding="20"
+                Visibility="Collapsed"
+                HorizontalAlignment="Right"
+                BorderBrush="{DynamicResource BrushPrincipal}"
+                BorderThickness="1"
+                CornerRadius="10"
+                Effect="{StaticResource DropShadow}">
+
+            <StackPanel>
+                <TextBlock x:Name="DetalleNombre"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource BrushPrincipal}"
+                           Margin="0,0,0,10" />
+                <TextBlock x:Name="DetalleEquipo"
+                           Foreground="{DynamicResource BrushTexto}"
+                           Margin="0,0,0,5" />
+                <TextBlock x:Name="DetalleNacionalidad"
+                           Foreground="{DynamicResource BrushTexto}"
+                           Margin="0,0,0,5" />
+                <TextBlock x:Name="DetallePuntos"
+                           Foreground="{DynamicResource BrushTexto}"
+                           Margin="0,0,0,5" />
+                <TextBlock x:Name="DetalleVictorias"
+                           Foreground="{DynamicResource BrushTexto}"
+                           Margin="0,0,0,15" />
+
+                <Button Content="Cerrar"
+                        Style="{StaticResource AccentButtonStyle}"
+                        Width="90"
+                        Click="CerrarPanel_Click"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

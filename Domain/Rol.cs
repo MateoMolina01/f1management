@@ -55,5 +55,10 @@ namespace f1management.Persistence
         {
             rm.updateRol(this);
         }
+
+        public override string ToString()
+        {
+            return Nombre;
+        }
     }
 }

@@ -20,36 +20,75 @@ namespace f1management.View
     /// </summary>
     public partial class DashboardView : UserControl
     {
+        private List<DashboardOption> opciones;
+        private int indiceActual = 0;
+
         public DashboardView()
         {
             InitializeComponent();
+            InicializarOpciones();
+            MostrarOpcionActual();
         }
 
-        private void Carreras_Click(object sender, RoutedEventArgs e)
+        private void InicializarOpciones()
         {
-            ((MainWindow)Application.Current.MainWindow).MainContent.Content = new CarrerasView();
-        }
 
-        private void Piezas_Click(object sender, RoutedEventArgs e)
+            if (App.UsuarioActual != null && App.UsuarioActual.EsAdmin)
+            {
+                opciones = new List<DashboardOption>
+                {
+                    new DashboardOption { Titulo = "CARRERAS", Icono = "🏁", Accion = () => Navegar(new CarrerasView()) },
+                    new DashboardOption { Titulo = "PIEZAS", Icono = "🧩", Accion = () => Navegar(new PiezasView()) },
+                    new DashboardOption { Titulo = "RENDIMIENTO", Icono = "📊", Accion = () => Navegar(new RendimientoView()) },
+                    new DashboardOption { Titulo = "MIEMBROS", Icono = "👥", Accion = () => Navegar(new MiembrosView()) },
+                    new DashboardOption { Titulo = "PILOTOS", Icono = "🏎️", Accion = () => Navegar(new PilotosView()) },
+                    new DashboardOption { Titulo = "ESTADÍSTICAS", Icono = "📈", Accion = () => Navegar(new EstadisticasView()) }
+                };
+            }
+            else
+            {
+                opciones = new List<DashboardOption>
         {
-            ((MainWindow)Application.Current.MainWindow).MainContent.Content = new PiezasView();
+                    new DashboardOption { Titulo = "CARRERAS", Icono = "🏁", Accion = () => Navegar(new CarrerasView()) },
+                    new DashboardOption { Titulo = "PIEZAS", Icono = "🧩", Accion = () => Navegar(new PiezasView()) },
+                    new DashboardOption { Titulo = "RENDIMIENTO", Icono = "📊", Accion = () => Navegar(new RendimientoView()) },
+                    new DashboardOption { Titulo = "PILOTOS", Icono = "🏎️", Accion = () => Navegar(new PilotosView()) },
+                    new DashboardOption { Titulo = "ESTADÍSTICAS", Icono = "📈", Accion = () => Navegar(new EstadisticasView()) }
+                };
+            }
+
+                
         }
 
-        private void Rendimiento_Click(object sender, RoutedEventArgs e)
+        private void MostrarOpcionActual()
         {
-            ((MainWindow)Application.Current.MainWindow).MainContent.Content = new RendimientoView();
+            var actual = opciones[indiceActual];
+            IconoText.Text = actual.Icono;
+            TituloText.Text = actual.Titulo;
         }
 
-        private void Miembros_Click(object sender, RoutedEventArgs e)
+        private void Anterior_Click(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).MainContent.Content = new MiembrosView();
+            indiceActual = (indiceActual - 1 + opciones.Count) % opciones.Count;
+            MostrarOpcionActual();
         }
 
-        private void Pilotos_Click(object sender, RoutedEventArgs e)
+        private void Siguiente_Click(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).MainContent.Content = new PilotosView();
+            indiceActual = (indiceActual + 1) % opciones.Count;
+            MostrarOpcionActual();
         }
 
+        private void EjecutarOpcion_Click(object sender, RoutedEventArgs e)
+        {
+            opciones[indiceActual].Accion.Invoke();
+        }
 
+        private void Navegar(UserControl vista)
+        {
+            ((MainWindow)Application.Current.MainWindow).MainContent.Content = vista;
+        }
     }
 }
+
+

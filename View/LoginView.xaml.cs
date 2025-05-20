@@ -3,6 +3,8 @@ using proyectoExamen.persistence.manages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,39 +33,30 @@ namespace f1management.View
             this.mainW = mainWindow;
         }
 
-        //private void IniciarSesion_Click(object sender, RoutedEventArgs e)
-        //{
-        //    string user = txtUsuario.Text;
-        //    string password = txtPassword.Password;
-
-        //    //comprobacion generica de momento
-        //    if(user == "admin" && password == "1234")
-        //    {
-        //        //cambio la vista princiap
-        //        if(Application.Current.MainWindow is MainWindow mainWindow)
-        //        {
-        //            mainW.LoginExitoso();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Usuario o contraseña incorrectos", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-        //    }
-        //}
+        private void CrearCuenta_Click(object sender, RoutedEventArgs e)
+        {
+            RegistroUsuarioWindow ventanaRegistro = new RegistroUsuarioWindow();
+            ventanaRegistro.ShowDialog(); // Modal
+        }
 
         private void IniciarSesion_Click(object sender, RoutedEventArgs e)
         {
             string user = txtUsuario.Text.Trim();
-            string password = txtPassword.Password.Trim();
+            string password = txtPassword.Password;
 
             UsuarioManager usuarioManager = new UsuarioManager();
             List<Usuario> usuarios = usuarioManager.readUsuarios();
 
+            string passwordEncriptada = usuarioManager.EncriptarContraseña(password);
+
             // Buscar el usuario con nombre y contraseña coincidentes
-            Usuario usuarioEncontrado = usuarios.FirstOrDefault(u => u.Nombre == user && u.Password == password);
+            Usuario usuarioEncontrado = usuarios.FirstOrDefault(u => u.Nombre == user && u.Password == passwordEncriptada);
 
             if (usuarioEncontrado != null)
             {
+                //lo guardo en el app para poder usarlo en el resto de la aplicacion
+                App.UsuarioActual = usuarioEncontrado;
+
                 // Login correcto: puedes verificar también si es admin con usuarioEncontrado.EsAdmin
                 if (Application.Current.MainWindow is MainWindow mainW)
                 {
@@ -75,5 +68,7 @@ namespace f1management.View
                 MessageBox.Show("Usuario o contraseña incorrectos", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+       
     }
 }

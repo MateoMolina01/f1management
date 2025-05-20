@@ -1,7 +1,7 @@
 ﻿f1management
 1.0.0.0
 
-winexe
+exe
 C#
 .cs
 C:\Users\mateo_molina\Desktop\TFG\Código\f1management\obj\Debug\net8.0-windows\
@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 C:\Users\mateo_molina\Desktop\TFG\Código\f1management\App.xaml
-11403684776
+131979226023
 
-38-1759266990
-2191982508642
-MainWindow.xaml;Themes\DarkTheme.xaml;Themes\LightTheme.xaml;Themes\Styles.xaml;View\CarrerasView.xaml;View\DashboardView.xaml;View\LoginView.xaml;View\MiembrosView.xaml;View\PiezasView.xaml;View\PilotosView.xaml;View\RendimientoView.xaml;
+56-1921781867
+2261321127699
+MainWindow.xaml;Themes\DarkTheme.xaml;Themes\LightTheme.xaml;Themes\Styles.xaml;View\CarrerasView.xaml;View\DashboardView.xaml;View\EstadisticasView.xaml;View\LoginView.xaml;View\MiembrosView.xaml;View\PiezasView.xaml;View\PilotosView.xaml;View\RegistroUsuarioWindow.xaml;View\RendimientoView.xaml;
 
 False
 

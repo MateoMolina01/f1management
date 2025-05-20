@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:f1management"
         Title="F1 Management" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource ColorFondo}">
+        Background="{DynamicResource BrushFondo}">
 
     <ContentControl x:Name="MainContent"/>
 </Window>
